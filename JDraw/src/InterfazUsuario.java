@@ -6,7 +6,7 @@ public class InterfazUsuario {
         GestorPrompt prompt = new GestorPrompt();
         while(!fin){
             prompt.pedir_comando();
-            System.out.println(prompt.getlista_comandos());
+            System.out.println(prompt.getHistorial().toString());
             String comando=prompt.getComando();
             switch (comando){
                 case "line":
