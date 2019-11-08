@@ -1,52 +1,80 @@
 package Comandos;
 
-import Excepciones.Comando_no_valido;
+import Excepciones.ComandoNoEncontrado;
+import Excepciones.ComandoNoValidoEnFormato;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GestorPrompt {
-    private final String[] lista_comandos = {"line", "circle", "pencolor","fillcolor", "width", "rect","text", "ellipse", "clear","undo","save","load"};
+    private final String[] lista_comandos = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "clear", "undo", "save", "load"};
     private String comando;
     private ArrayList<Integer> argumentos;
     private ArrayList<String> historial;
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     public GestorPrompt() {
+        ArrayList<Integer> argument = new ArrayList<>();
         boolean Error = true;
-        String mandato=null;
-        String linea=null;
+        String mandato = null;
+        String linea;
+        int erroresCometidos=0;
         Scanner scan = new Scanner(System.in);
-        do{
-            System.out.println("~$");
+        do {
+            System.out.print("JDraw ~$: ");
             try {
                 linea = scan.nextLine();
-                mandato= linea.split(" ")[0];
-                String args = linea.split(" ")[1];
-                for (int i = 0; i < args.split(",").length-1; i++) {
-                    argumentos.add(Integer.parseInt(args.split(",")[i]));
+                if (linea.split(" ").length == 2) {
+                    mandato = linea.split(" ")[0];
+                    String[] args = linea.split(" ")[1].split(",");
+                    for (int i = 0; i < (args.length) - 1; i++) {
+                        argument.add(Integer.parseInt(args[i]));
+                    }
+                    //Comprobar el comando
+                    for (int i = 0; i < lista_comandos.length - 1; i++) {
+                        if (mandato.equals(lista_comandos[i])) {
+                            Error = false;
+                            break;
+                        }
+                    }
                 }
-                for (int i = 0; i < lista_comandos.length-1; i++) {
-                    if(mandato==lista_comandos[i]){
-                        Error=false;
-                        break;
-                    }else throw new Comando_no_valido();
-                }
-            } catch (Comando_no_valido e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        } while(!Error);
+            erroresCometidos++;
+            if (erroresCometidos % 3 ==0){showhelp();}
+        } while (Error);
         this.comando = mandato;
-        historial.add(linea);
+        this.argumentos = argument;
+    }
+
+    private void showhelp() {
+        System.out.println(ANSI_RED+"Los comandos admitidos son los siguientes");
+        System.out.println("line x0,y0,x1,y1");
+        System.out.println("fillcolor o,r,g,b");
+        System.out.println("pencolor o,r,g,b");
+        System.out.println("width n");
+        System.out.println("rect x,y,w,h");
+        System.out.println("circle x,y,r");
+        System.out.println("text x,y,mensaje");
+        System.out.println("elipse x,y,rx,ry");
+        System.out.println("clear");
+        System.out.println("undo");
+        System.out.println("save ruta,nombre");
+        System.out.println("load ruta,nombre"+ANSI_RESET);
     }
 
     public String getComando() {
         return comando;
     }
 
-    public String[] getLista_comandos() {
+    public String[] getlista_comandos() {
         return lista_comandos;
     }
 
     public ArrayList<Integer> getArgumentos() {
         return argumentos;
     }
+
 }
