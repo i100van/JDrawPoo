@@ -1,3 +1,5 @@
+package Ficheros;
+
 import Figuras.Figura;
 
 import java.io.*;

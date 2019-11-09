@@ -1,15 +1,14 @@
 package Comandos;
 
-import Excepciones.ComandoNoEncontrado;
-import Excepciones.ComandoNoValidoEnFormato;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class GestorPrompt {
 
-    private final String[] lista_comandos = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "clear", "undo", "save", "load"};
+    private final String[] COMANDOS = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "clear", "undo", "save", "load"};
+    private final int[] ARGUMENTOS = {4,3,4,4,1,4,3,4,0,0,2,2};
+
     private String comando;
     private ArrayList<Integer> argumentos;
     private String text;
@@ -28,7 +27,7 @@ public class GestorPrompt {
         String linea = null;
         int erroresCometidos = 0;
         Scanner scan = new Scanner(System.in);
-        while (Error){//TODO remodelar estoi con una matriz de cxopmandos y su numero de parametros para comprobar que la entrada es correcta
+        while (Error){//TODO remodelar esto con una matriz de copmandos y su numero de parametros para comprobar que la entrada es correcta
             System.out.print("JDraw ~$: ");
             try {
                 linea = scan.nextLine();
@@ -47,8 +46,8 @@ public class GestorPrompt {
                         }
                     }
                     //Comprobar el comando
-                    for (int i = 0; i < lista_comandos.length - 1; i++) {
-                        if (mandato.equals(lista_comandos[i])) {
+                    for (int i = 0; i < COMANDOS.length - 1; i++) {
+                        if (mandato.equals(COMANDOS[i])) {
                             Error = false;
                             break;
                         }

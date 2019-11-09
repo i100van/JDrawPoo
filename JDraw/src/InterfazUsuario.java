@@ -1,5 +1,6 @@
 import Comandos.GestorPrompt;
 import Excepciones.NumeroDeArgumentosIncorrecto;
+import Ficheros.Fichero;
 import Figuras.Linea;
 import Figuras.Texto;
 
@@ -19,8 +20,6 @@ public class InterfazUsuario {
             ArrayList<Integer> argumentos = prompt.getArgumentos();
             switch (comando) {
                 case "line":
-                    System.out.println(argumentos.size());
-                    System.out.println(argumentos.toString());
                     System.out.println("Estoy dibujando linea");
                     Linea linea = new Linea(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
                     int borde[] = {1, 2, 3, 4};
@@ -37,7 +36,6 @@ public class InterfazUsuario {
                     System.out.println("Estoy dibujando texto");
                     Texto texto = new Texto(argumentos.get(0), argumentos.get(1), prompt.getText());
                     System.out.println(texto.toString());
-
                     break;
                 case "ellipse":
                     System.out.println("Estoy dibujando elipse");
