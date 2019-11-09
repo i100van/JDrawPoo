@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class InterfazUsuario {
+    private GestorPrompt prompt;
+    private Fichero file;
     public InterfazUsuario() throws NumeroDeArgumentosIncorrecto, IOException {
         boolean fin = false;
-        GestorPrompt prompt = new GestorPrompt();
-        Fichero file = new Fichero();
-        //file.escribir_figura();
+        this.prompt = new GestorPrompt();
+        this.file = new Fichero();
         while (!fin) {
             prompt.pedir_comando();
             System.out.println(prompt.getHistorial().toString());
@@ -19,26 +20,23 @@ public class InterfazUsuario {
             ArrayList<Integer> argumentos = prompt.getArgumentos();
             switch (comando) {
                 case "line":
-                    System.out.println("Estoy dibujando linea");
                     Linea linea = new Linea(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
-                    System.out.println(linea.toString());
+                    file.escribir_figura(linea.toString());
                     break;
                 case "rect":
-                    System.out.println("Estoy dibujando rectangulo");
                     Rectangulo rectangulo = new Rectangulo(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
                     break;
                 case "circle":
-                    System.out.println("Estoy dibujando circulo");
                     Circulo circulo = new Circulo(argumentos.get(0), argumentos.get(1), argumentos.get(2));
+                    file.escribir_figura(circulo.toString());
                     break;
                 case "text":
-                    System.out.println("Estoy dibujando texto");
                     Texto texto = new Texto(argumentos.get(0), argumentos.get(1), prompt.getText());
-                    System.out.println(texto.toString());
+                    file.escribir_figura(texto.toString());
                     break;
                 case "ellipse":
-                    System.out.println("Estoy dibujando elipse");
                     Elipse elipse = new Elipse(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
+                    file.escribir_figura(elipse.toString());
                     break;
                 case "pencolor":
                     System.out.println("Estoy en pencolor");
@@ -51,6 +49,7 @@ public class InterfazUsuario {
                     break;
                 case "clear":
                     System.out.println("Estoy en clear");
+                    this.file=new Fichero();
                     break;
                 case "undo":
                     System.out.println("Estoy en undo");
@@ -66,7 +65,7 @@ public class InterfazUsuario {
                     fin = true;
 
             }
-
+            file.cerrar_fichero();
         }
 
     }
