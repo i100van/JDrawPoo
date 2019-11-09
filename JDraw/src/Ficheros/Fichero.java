@@ -1,9 +1,6 @@
 package Ficheros;
 
-import Figuras.Figura;
-
 import java.io.*;
-import java.util.Scanner;
 
 public class Fichero {
     private File file;

@@ -1,5 +1,7 @@
 package Comandos;
 
+import Excepciones.ComandoNoValido;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class GestorPrompt {
     private final int[] ARGUMENTOS = {4,3,4,4,1,4,3,4,0,0,2,2};
 
     private String comando;
-    private ArrayList<Integer> argumentos;
+    private ArrayList argumentos;
     private String text;
     private ArrayList<String> historial;
 
@@ -23,46 +25,48 @@ public class GestorPrompt {
     public void pedir_comando() {
         ArrayList<Integer> argument = new ArrayList<>();
         boolean Error = true;
-        String mandato = null;
-        String linea = null;
         int erroresCometidos = 0;
         Scanner scan = new Scanner(System.in);
+        String mandato = null;
+        String linea = null;
         while (Error){//TODO remodelar esto con una matriz de copmandos y su numero de parametros para comprobar que la entrada es correcta
             System.out.print("JDraw ~$: ");
             try {
                 linea = scan.nextLine();
-                //Comprobar la longitud y guardar los argumentos
+                //Comprobar la forma
                 if (linea.split(" ").length == 2) {
                     mandato = linea.split(" ")[0];
                     String[] args = linea.split(" ")[1].split(",");
-                    if (mandato.equals("text") && args.length==3) {
-                        for (int i = 0; i < (args.length) - 1; i++) {
-                            argument.add(Integer.parseInt(args[i]));
-                        }
-                        this.text = args[args.length-1];
-                    } else {
-                        for (int i = 0; i < (args.length); i++) {
-                            argument.add(Integer.parseInt(args[i]));
-                        }
-                    }
-                    //Comprobar el comando
+                    //Comprobar el comando y el numero de argumentos
                     for (int i = 0; i < COMANDOS.length - 1; i++) {
-                        if (mandato.equals(COMANDOS[i])) {
+                        if (mandato.equals(COMANDOS[i]) && args.length==ARGUMENTOS[i] ) {
                             Error = false;
+                            //Si es comando text el ultimo parametro debe ser un string
+                            if(!mandato.equals("text")){
+                                for (int j = 0; j < (args.length); j++) {
+                                    argument.add(Integer.parseInt(args[j]));
+                                }
+                            }else{
+                                for (int j = 0; j < (args.length)-1; j++) {
+                                    argument.add(Integer.parseInt(args[j]));
+                                }
+                                this.text=args[2];
+                            }
                             break;
                         }
                     }
-                }
+                } else throw new ComandoNoValido();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+            //Mostrar la ayuda en caso de 3 errores
             erroresCometidos++;
             if (erroresCometidos % 3 == 0) {
                 Help ayuda = new Help();
                 ayuda.showhelp();
             }
         }
-        System.out.println("NO ha habido error");
+        System.out.println("No ha habido error");
         this.comando = mandato;
         this.argumentos = argument;
         this.historial.add(linea);

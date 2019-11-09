@@ -1,8 +1,7 @@
 import Comandos.GestorPrompt;
 import Excepciones.NumeroDeArgumentosIncorrecto;
 import Ficheros.Fichero;
-import Figuras.Linea;
-import Figuras.Texto;
+import Figuras.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,15 +21,15 @@ public class InterfazUsuario {
                 case "line":
                     System.out.println("Estoy dibujando linea");
                     Linea linea = new Linea(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
-                    int borde[] = {1, 2, 3, 4};
-                    linea.setBorde(borde);
                     System.out.println(linea.toString());
                     break;
                 case "rect":
                     System.out.println("Estoy dibujando rectangulo");
+                    Rectangulo rectangulo = new Rectangulo(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
                     break;
                 case "circle":
                     System.out.println("Estoy dibujando circulo");
+                    Circulo circulo = new Circulo(argumentos.get(0), argumentos.get(1), argumentos.get(2));
                     break;
                 case "text":
                     System.out.println("Estoy dibujando texto");
@@ -39,6 +38,7 @@ public class InterfazUsuario {
                     break;
                 case "ellipse":
                     System.out.println("Estoy dibujando elipse");
+                    Elipse elipse = new Elipse(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
                     break;
                 case "pencolor":
                     System.out.println("Estoy en pencolor");
