@@ -12,6 +12,7 @@ public class GestorPrompt {
     private final String[] lista_comandos = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "clear", "undo", "save", "load"};
     private String comando;
     private ArrayList<Integer> argumentos;
+    private String text;
     private ArrayList<String> historial;
 
     public GestorPrompt() {
@@ -27,7 +28,7 @@ public class GestorPrompt {
         String linea = null;
         int erroresCometidos = 0;
         Scanner scan = new Scanner(System.in);
-        do {
+        while (Error){//TODO remodelar estoi con una matriz de cxopmandos y su numero de parametros para comprobar que la entrada es correcta
             System.out.print("JDraw ~$: ");
             try {
                 linea = scan.nextLine();
@@ -35,8 +36,15 @@ public class GestorPrompt {
                 if (linea.split(" ").length == 2) {
                     mandato = linea.split(" ")[0];
                     String[] args = linea.split(" ")[1].split(",");
-                    for (int i = 0; i < (args.length) - 1; i++) {
-                        argument.add(Integer.parseInt(args[i]));
+                    if (mandato.equals("text") && args.length==3) {
+                        for (int i = 0; i < (args.length) - 1; i++) {
+                            argument.add(Integer.parseInt(args[i]));
+                        }
+                        this.text = args[args.length-1];
+                    } else {
+                        for (int i = 0; i < (args.length); i++) {
+                            argument.add(Integer.parseInt(args[i]));
+                        }
                     }
                     //Comprobar el comando
                     for (int i = 0; i < lista_comandos.length - 1; i++) {
@@ -54,7 +62,8 @@ public class GestorPrompt {
                 Help ayuda = new Help();
                 ayuda.showhelp();
             }
-        } while (Error);
+        }
+        System.out.println("NO ha habido error");
         this.comando = mandato;
         this.argumentos = argument;
         this.historial.add(linea);
@@ -72,4 +81,7 @@ public class GestorPrompt {
         return argumentos;
     }
 
+    public String getText() {
+        return text;
+    }
 }
