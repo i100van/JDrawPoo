@@ -3,35 +3,24 @@ package Comandos;
 import Excepciones.ArgumentosNoValidos;
 
 public class Modificador {
-    private int opacidad;
-    private int[] rgb;
+    private int o;
+    private int red;
+    private int green;
+    private int blue;
 
-    public Modificador(int opacidad, int[] rgb) throws ArgumentosNoValidos {
-        if (opacidad < 1 && opacidad < 0) {
-            for (int i = 0; i < rgb.length - 1; i++) {
-                if (rgb[i] >= 0 | rgb[i] <= 255) {
-                    this.opacidad=opacidad;
-                    this.rgb=rgb;
-                }else throw new ArgumentosNoValidos();
+    public Modificador(int o, int[] rgb) throws ArgumentosNoValidos {
+        //TODO cambiar el constructor
+        boolean bien=true;
+        for (int i = 0; i < rgb.length-1; i++) {
+            if(o<0 | o>1 | rgb[i]<0 | rgb[i]>255){
+                bien=false;
+                break;
             }
-        } else {
-            throw new ArgumentosNoValidos();
         }
-    }
+        if(bien){
+            this.o=o;
+            this.rgb=rgb;
+        }else throw new ArgumentosNoValidos();
 
-    public int getOpacidad() {
-        return opacidad;
-    }
-
-    public void setOpacidad(int opacidad) {
-        this.opacidad = opacidad;
-    }
-
-    public int[] getRgb() {
-        return rgb;
-    }
-
-    public void setRgb(int[] rgb) {
-        this.rgb = rgb;
     }
 }

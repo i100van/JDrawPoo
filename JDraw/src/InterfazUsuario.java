@@ -1,5 +1,6 @@
 import Comandos.GestorPrompt;
 import Comandos.Modificador;
+import Excepciones.ArgumentosNoValidos;
 import Excepciones.NumeroDeArgumentosIncorrecto;
 import Ficheros.Fichero;
 import Figuras.*;
@@ -11,9 +12,10 @@ import java.util.List;
 public class InterfazUsuario {
     private GestorPrompt prompt;
     private Fichero file;
-    private List<Modificador> modificadores;
+    private Modificador mBorde;
+    private Modificador mColor;
 
-    public InterfazUsuario() throws NumeroDeArgumentosIncorrecto, IOException {
+    public InterfazUsuario() throws NumeroDeArgumentosIncorrecto, IOException, ArgumentosNoValidos {
         boolean fin = false;
         this.prompt = new GestorPrompt();
         this.file = new Fichero();
@@ -40,10 +42,17 @@ public class InterfazUsuario {
                     break;
                 case "ellipse":
                     Elipse elipse = new Elipse(argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3));
+                    if(mBorde!=null){
+
+                    }
+                    if(mColor!=null){
+
+                    }
                     file.escribir_figura(elipse.toString());
                     break;
                 case "pencolor":
                     System.out.println("Estoy en pencolor");
+                    this.mBorde
                     break;
                 case "fillcolor":
                     System.out.println("Estoy en fillcolor");
@@ -73,4 +82,5 @@ public class InterfazUsuario {
         }
 
     }
+    public void comprobarModificadores(){}
 }
