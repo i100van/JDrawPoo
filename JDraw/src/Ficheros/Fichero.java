@@ -19,7 +19,9 @@ public class Fichero {
                 " <meta http-equiv=\"refresh\" content=\"2\"/>\n" +
                 " </head>\n" +
                 " <body>\n" +
-                " <svg width=\"1024\" height=\"1024\">\n"
+                " <svg width=\"1024\" height=\"1024\">\n"+
+                //Aqui habria que insertar las figuras
+                "</svg></body></html>"
                 );
     }
 

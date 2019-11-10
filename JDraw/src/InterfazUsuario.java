@@ -1,14 +1,18 @@
 import Comandos.GestorPrompt;
+import Comandos.Modificador;
 import Excepciones.NumeroDeArgumentosIncorrecto;
 import Ficheros.Fichero;
 import Figuras.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InterfazUsuario {
     private GestorPrompt prompt;
     private Fichero file;
+    private List<Modificador> modificadores;
+
     public InterfazUsuario() throws NumeroDeArgumentosIncorrecto, IOException {
         boolean fin = false;
         this.prompt = new GestorPrompt();

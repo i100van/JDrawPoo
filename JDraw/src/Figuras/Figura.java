@@ -1,5 +1,7 @@
 package Figuras;
 
+import Excepciones.ArgumentosNoValidos;
+
 import java.util.StringJoiner;
 
 public abstract class Figura {
@@ -8,9 +10,11 @@ public abstract class Figura {
     protected int[] color;
     protected int[] borde;
 
-    public Figura(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Figura(int x, int y) throws ArgumentosNoValidos {
+        if(x>0 && y>0){
+            this.x = x;
+            this.y = y;
+        }else throw new ArgumentosNoValidos();
         this.color= new int[]{1,0,0,0};
     }
     abstract public String toString();
