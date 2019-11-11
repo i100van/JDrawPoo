@@ -1,8 +1,11 @@
 package Ficheros;
 
+import Figuras.Figura;
+
 import java.awt.*;
 import java.io.*;
 import java.net.URI;
+import java.util.ArrayList;
 
 public class Fichero {
     private File file;
@@ -28,8 +31,8 @@ public class Fichero {
     public void escribir_figura (String figura) throws IOException {
         wr.append(figura);
     }
-    public void cerrar_fichero() throws IOException {
-        wr.append("</svg></body></html>");
-        wr.close();
+
+
+    public void escribir_Historial(ArrayList<Figura> historial) {
     }
 }

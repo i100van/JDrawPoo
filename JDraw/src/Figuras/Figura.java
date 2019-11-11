@@ -11,12 +11,14 @@ public abstract class Figura {
     protected int[] borde;
 
     public Figura(int x, int y) throws ArgumentosNoValidos {
-        if(x>0 && y>0){
+        if (x >= 0 && y >= 0) {
             this.x = x;
             this.y = y;
-        }else throw new ArgumentosNoValidos();
-        this.color= new int[]{1,0,0,0};
+            this.color = new int[]{0, 0, 0, 0};
+            this.borde = new int[]{100, 0, 0, 0};
+        } else throw new ArgumentosNoValidos();
     }
+
     abstract public String toString();
 
     public void setColor(int[] color) {
@@ -27,14 +29,10 @@ public abstract class Figura {
         this.borde = borde;
     }
 
-    protected String string_Borde_Color (){
+    protected String string_Borde_Color() {
         StringJoiner sj = new StringJoiner(" ");
-        if (this.color!=null){
-            sj.add("stroke-width=\""+color[0]+"\" stroke=\"rgb("+color[1]+","+color[2]+","+color[3]+")\"");
-        }
-        if (this.borde!=null){
-            sj.add("fill=\"rgb("+borde[1]+","+borde[2]+","+borde[3]+")\" fill-opacity=\""+borde[0]+"\"");
-        }
+        sj.add("stroke-width=\"" + borde[0] + "\" stroke=\"rgb(" + borde[1] + "," + borde[2] + "," + borde[3] + ")\"");
+        sj.add("fill=\"rgb(" + color[1] + "," + color[2] + "," + color[3] + ")\" fill-opacity=\"" + color[0] + "\"");
         return sj.toString();
     }
 }

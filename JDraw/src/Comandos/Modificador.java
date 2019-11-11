@@ -1,26 +1,28 @@
 package Comandos;
-
-import Excepciones.ArgumentosNoValidos;
+import Figuras.Figura;
 
 public class Modificador {
-    private int o;
-    private int red;
-    private int green;
-    private int blue;
+    private int[] parametros;
 
-    public Modificador(int o, int[] rgb) throws ArgumentosNoValidos {
-        //TODO cambiar el constructor
-        boolean bien=true;
-        for (int i = 0; i < rgb.length-1; i++) {
-            if(o<0 | o>1 | rgb[i]<0 | rgb[i]>255){
-                bien=false;
-                break;
-            }
-        }
-        if(bien){
-            this.o=o;
-            this.rgb=rgb;
-        }else throw new ArgumentosNoValidos();
+    public Modificador(int[] parametros) {
+        this.parametros = parametros;
+    }
 
+    public int[] getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(int[] parametros) {
+        this.parametros = parametros;
+    }
+
+    public Figura modificar_borde (Figura fig){
+        fig.setBorde(this.parametros);
+        return fig;
+    }
+
+    public Figura modificar_color (Figura fig){
+        fig.setColor(this.parametros);
+        return fig;
     }
 }
