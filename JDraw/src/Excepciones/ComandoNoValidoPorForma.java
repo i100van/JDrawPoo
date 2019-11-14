@@ -1,7 +1,7 @@
 package Excepciones;
 
-public class ComandoNoValido extends Exception {
-    public ComandoNoValido() {
+public class ComandoNoValidoPorForma extends Exception {
+    public ComandoNoValidoPorForma() {
         super("Comando no valido, debe tener extructura mandato var,var..");
     }
 }

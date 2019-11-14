@@ -1,6 +1,7 @@
 package Figuras;
 
 import Excepciones.ArgumentosNoValidos;
+import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;
 
@@ -11,13 +12,18 @@ public abstract class Figura {
     protected int[] borde;
 
     public Figura(int x, int y) throws ArgumentosNoValidos {
-        if (x >= 0 && y >= 0) {
-            this.x = x;
-            this.y = y;
-            this.color = new int[]{0, 0, 0, 0};
-            this.borde = new int[]{100, 0, 0, 0};
-        } else throw new ArgumentosNoValidos();
+        try{
+            if (x >= 0 && y >= 0) {
+                this.x = x;
+                this.y = y;
+                this.color = new int[]{0, 0, 0, 0};
+                this.borde = new int[]{100, 0, 0, 0};
+            } else throw new ValorNoPermitido();
+        } catch (ValorNoPermitido valorNoPermitido) {
+            System.out.println(valorNoPermitido);
+        }
     }
+
 
     abstract public String toString();
 

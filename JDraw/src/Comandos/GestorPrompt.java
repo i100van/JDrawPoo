@@ -1,6 +1,7 @@
 package Comandos;
 
-import Excepciones.ComandoNoValido;
+import Excepciones.ComandoNoValidoPorForma;
+import Excepciones.NumeroDeArgumentosIncorrecto;
 import Figuras.Figura;
 
 import java.util.ArrayList;
@@ -41,32 +42,24 @@ public class GestorPrompt {
                     String[] args = linea.split(" ")[1].split(",");
                     //Comprobar el comando y el numero de argumentos
                     for (int i = 0; i < COMANDOS.length - 1; i++) {
-                        if (mandato.equals(COMANDOS[i]) && args.length == ARGUMENTOS[i]) {
-                            //Si es comando text el ultimo parametro debe ser un string
-                            if (!mandato.equals("text")) {
-                                for (int j = 0; j < (args.length) ; j++) {
-                                    try {
+                        if (mandato.equals(COMANDOS[i])) {
+                            if (args.length == ARGUMENTOS[i]) {
+                                //Si es comando text el ultimo parametro debe ser un string
+                                if (!mandato.equals("text")) {
+                                    for (int j = 0; j < (args.length); j++) {
                                         argument.add(Integer.parseInt(args[j]));
-                                    } catch (Exception e) {
-                                        System.out.println(e.getMessage());
-                                        Error = true;
                                     }
-                                }
-                            } else {
-                                for (int j = 0; j < (args.length) - 1; j++) {
-                                    try {
+                                } else {
+                                    for (int j = 0; j < (args.length) - 1; j++) {
                                         argument.add(Integer.parseInt(args[j]));
-                                    } catch (Exception e) {
-                                        System.out.println(e.getMessage());
-                                        Error = true;
                                     }
+                                    this.text = args[2];
                                 }
-                                this.text = args[2];
-                            }
-                            break;
+                                break;
+                            } else throw new NumeroDeArgumentosIncorrecto();
                         }
                     }
-                } else throw new ComandoNoValido();
+                } else throw new ComandoNoValidoPorForma();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 Error = true;
@@ -78,10 +71,9 @@ public class GestorPrompt {
                 ayuda.showhelp();
             }
         }
-        System.out.println("No ha habido error en formato. Comando:"+mandato+" ,Args[]:"+argument.toString());
+        System.out.println("No ha habido error en formato. Comando:" + mandato + " ,Args[]:" + argument.toString());
         this.comando = mandato;
         this.argumentos = argument;
-        this.historial= new ArrayList<>();
     }
 
     public void add_Historial(Figura fi) {

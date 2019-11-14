@@ -1,6 +1,7 @@
 package Figuras;
 
 import Excepciones.ArgumentosNoValidos;
+import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;
 
@@ -10,10 +11,14 @@ public class Elipse extends Figura {
 
     public Elipse(int x, int y, int rx, int ry) throws ArgumentosNoValidos {
         super(x, y);
-        if (rx > 0 && ry > 0) {
-            this.rx = rx;
-            this.ry = ry;
-        } else throw new ArgumentosNoValidos();
+        try {
+            if (rx > 0 && ry > 0) {
+                this.rx = rx;
+                this.ry = ry;
+            } else throw new ValorNoPermitido();
+        } catch (ValorNoPermitido valorNoPermitido) {
+            System.out.println(valorNoPermitido);
+        }
     }
 
     @Override

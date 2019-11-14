@@ -10,16 +10,15 @@ import java.util.ArrayList;
 public class InterfazUsuario {
     private GestorPrompt prompt;
     private Fichero file;
-    private Modificador mBorde;
-    private Modificador mColor;
+    private Modificador modificador;
 
     public InterfazUsuario() throws IOException, ArgumentosNoValidos {
         this.prompt = new GestorPrompt();
         this.file = new Fichero();
         boolean fin = false;
         while (!fin) {
-            prompt.pedir_comando();
-            System.out.println("El historial de mandatos correctos es: " + prompt.getHistorial().toString());
+            this.prompt.pedir_comando();
+            System.out.println("El historial de mandatos correctos es: " + this.prompt.getHistorial());
             String comando = prompt.getComando();
             ArrayList<Integer> argumentos = prompt.getArgumentos();
             switch (comando) {
@@ -42,12 +41,12 @@ public class InterfazUsuario {
                 case "pencolor":
                     System.out.println("Estoy en pencolor");
                     int[] par_borde = {argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3)};
-                    this.mColor = new Modificador(par_borde);
+
                     break;
                 case "fillcolor":
                     System.out.println("Estoy en fillcolor");
                     int[] par_color = {argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3)};
-                    this.mBorde = new Modificador(par_color);
+
                     break;
                 case "width":
                     System.out.println("Estoy en width");
