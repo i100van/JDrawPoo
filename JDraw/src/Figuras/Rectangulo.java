@@ -1,6 +1,5 @@
 package Figuras;
 
-import Excepciones.ArgumentosNoValidos;
 import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;
@@ -17,7 +16,7 @@ public class Rectangulo extends Figura {
                 this.h = h;
             } else throw new ValorNoPermitido();
         } catch (ValorNoPermitido valorNoPermitido) {
-            System.out.println(valorNoPermitido);
+            System.err.println(valorNoPermitido);
         }
     }
 

@@ -1,6 +1,5 @@
 package Figuras;
 
-import Excepciones.ArgumentosNoValidos;
 import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;

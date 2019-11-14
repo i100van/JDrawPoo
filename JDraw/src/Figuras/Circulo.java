@@ -1,6 +1,5 @@
 package Figuras;
 
-import Excepciones.ArgumentosNoValidos;
 import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;
@@ -15,7 +14,7 @@ public class Circulo extends Figura {
                 this.radio = radio;
             } else throw new ValorNoPermitido();
         } catch (ValorNoPermitido valorNoPermitido) {
-            System.out.println(valorNoPermitido);
+            System.err.println(valorNoPermitido);
         }
     }
 

@@ -31,7 +31,7 @@ public class GestorPrompt {
         int erroresCometidos = 0;
         Scanner scan = new Scanner(System.in);
         String mandato = null;
-        String linea = null;
+        String linea;
         while (Error) {
             System.out.print("JDraw ~$: ");
             Error = false;
@@ -46,7 +46,7 @@ public class GestorPrompt {
                     mandato = linea.split(" ")[0];
                 } else throw new ComandoNoValidoPorForma();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
                 Error = true;
             }
             //Mostrar la ayuda en caso de 3 errores
@@ -66,8 +66,8 @@ public class GestorPrompt {
                 if (args.length == ARGUMENTOS[i]) {
                     //Si es comando text el ultimo parametro debe ser un string
                     if (!mandato.equals("text")) {
-                        for (int j = 0; j < (args.length); j++) {
-                            argument.add(Integer.parseInt(args[j]));
+                        for (String arg : args) {
+                            argument.add(Integer.parseInt(arg));
                         }
                     } else {
                         for (int j = 0; j < (args.length) - 1; j++) {
@@ -84,9 +84,7 @@ public class GestorPrompt {
     private boolean es_Undo_Clear(String linea) {
         if (linea.split(" ").length == 1) {
             String mandato = linea.split(" ")[0];
-            if (mandato.equals("clear") || mandato.equals("undo")) {
-                return true;
-            }
+            return mandato.equals("clear") || mandato.equals("undo");
         }
         return false;
     }
@@ -101,7 +99,7 @@ public class GestorPrompt {
                 historial.remove(historial.size() - 1);
             } else throw new NoHayFigurasQueDeshacer();
         } catch (NoHayFigurasQueDeshacer noHayFigurasQueDeshacer) {
-            System.out.println(noHayFigurasQueDeshacer);
+            System.err.println(noHayFigurasQueDeshacer);
         }
     }
 
@@ -113,7 +111,7 @@ public class GestorPrompt {
         return historial;
     }
 
-    public ArrayList<Integer> getArgumentos() {
+    public ArrayList getArgumentos() {
         return argumentos;
     }
 

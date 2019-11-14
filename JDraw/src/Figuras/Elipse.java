@@ -17,7 +17,7 @@ public class Elipse extends Figura {
                 this.ry = ry;
             } else throw new ArgumentosNoValidos();
         } catch (ArgumentosNoValidos argumentosNoValidos) {
-            System.out.println("Los argumentos no son validos");
+            System.err.println("Los argumentos no son validos");
         }
     }
 
