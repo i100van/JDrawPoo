@@ -9,7 +9,7 @@ public class Rectangulo extends Figura {
     private int w;
     private int h;
 
-    public Rectangulo(int x, int y, int w, int h) throws ArgumentosNoValidos {
+    public Rectangulo(int x, int y, int w, int h) throws ValorNoPermitido {
         super(x, y);
         try {
             if (w > 0 && h > 0) {

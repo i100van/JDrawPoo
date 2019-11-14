@@ -1,12 +1,13 @@
 package Figuras;
 import Excepciones.ArgumentosNoValidos;
+import Excepciones.ValorNoPermitido;
 
 import java.util.StringJoiner;
 
 public class Texto extends Figura {
     private String texto;
 
-    public Texto(int x, int y, String texto) throws ArgumentosNoValidos {
+    public Texto(int x, int y, String texto) throws ValorNoPermitido {
         super(x, y);
         this.texto = texto;
     }

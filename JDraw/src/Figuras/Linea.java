@@ -9,15 +9,15 @@ public class Linea extends Figura {
     protected int x1;
     protected int y1;
 
-    public Linea(int x, int y, int x1, int y1) throws ArgumentosNoValidos {
+    public Linea(int x, int y, int x1, int y1) throws ValorNoPermitido {
         super(x, y);
         try {
             if (x1 >= 0 && y1 >= 0) {
                 this.x1 = x1;
                 this.y1 = y1;
-            } else throw new ValorNoPermitido();
-        } catch (ValorNoPermitido valorNoPermitido) {
-            System.out.println(valorNoPermitido);
+            } else throw new ArgumentosNoValidos();
+        } catch (ArgumentosNoValidos argumentosNoValidos) {
+            System.out.println("Los argumentos no son validos");
         }
     }
 

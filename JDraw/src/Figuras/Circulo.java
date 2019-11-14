@@ -8,7 +8,7 @@ import java.util.StringJoiner;
 public class Circulo extends Figura {
     private int radio;
 
-    public Circulo(int x, int y, int radio) throws ArgumentosNoValidos {
+    public Circulo(int x, int y, int radio) throws ValorNoPermitido {
         super(x, y);
         try {
             if (radio > 0) {

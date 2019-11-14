@@ -11,17 +11,13 @@ public abstract class Figura {
     protected int[] color;
     protected int[] borde;
 
-    public Figura(int x, int y) throws ArgumentosNoValidos {
-        try{
+    public Figura(int x, int y) throws ValorNoPermitido {
             if (x >= 0 && y >= 0) {
                 this.x = x;
                 this.y = y;
                 this.color = new int[]{0, 0, 0, 0};
-                this.borde = new int[]{100, 0, 0, 0};
+                this.borde = new int[]{1, 0, 0, 0};
             } else throw new ValorNoPermitido();
-        } catch (ValorNoPermitido valorNoPermitido) {
-            System.out.println(valorNoPermitido);
-        }
     }
 
 

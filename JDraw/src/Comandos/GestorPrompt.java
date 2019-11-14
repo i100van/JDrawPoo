@@ -1,6 +1,7 @@
 package Comandos;
 
 import Excepciones.ComandoNoValidoPorForma;
+import Excepciones.NoHayFigurasQueDeshacer;
 import Excepciones.NumeroDeArgumentosIncorrecto;
 import Figuras.Figura;
 
@@ -31,7 +32,7 @@ public class GestorPrompt {
         Scanner scan = new Scanner(System.in);
         String mandato = null;
         String linea = null;
-        while (Error) {//TODO remodelar esto con una matriz de copmandos y su numero de parametros para comprobar que la entrada es correcta
+        while (Error) {
             System.out.print("JDraw ~$: ");
             Error = false;
             try {
@@ -40,25 +41,9 @@ public class GestorPrompt {
                 if (linea.split(" ").length == 2) {
                     mandato = linea.split(" ")[0];
                     String[] args = linea.split(" ")[1].split(",");
-                    //Comprobar el comando y el numero de argumentos
-                    for (int i = 0; i < COMANDOS.length - 1; i++) {
-                        if (mandato.equals(COMANDOS[i])) {
-                            if (args.length == ARGUMENTOS[i]) {
-                                //Si es comando text el ultimo parametro debe ser un string
-                                if (!mandato.equals("text")) {
-                                    for (int j = 0; j < (args.length); j++) {
-                                        argument.add(Integer.parseInt(args[j]));
-                                    }
-                                } else {
-                                    for (int j = 0; j < (args.length) - 1; j++) {
-                                        argument.add(Integer.parseInt(args[j]));
-                                    }
-                                    this.text = args[2];
-                                }
-                                break;
-                            } else throw new NumeroDeArgumentosIncorrecto();
-                        }
-                    }
+                    argumentos_correctos(argument, mandato, args);
+                } else if (es_Undo_Clear(linea)) {
+                    mandato = linea.split(" ")[0];
                 } else throw new ComandoNoValidoPorForma();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -67,17 +52,57 @@ public class GestorPrompt {
             //Mostrar la ayuda en caso de 3 errores
             erroresCometidos++;
             if (erroresCometidos % 3 == 0) {
-                Help ayuda = new Help();
-                ayuda.showhelp();
+                //Help ayuda = new Help();
+                //ayuda.showhelp();
             }
         }
-        System.out.println("No ha habido error en formato. Comando:" + mandato + " ,Args[]:" + argument.toString());
         this.comando = mandato;
         this.argumentos = argument;
     }
 
+    private void argumentos_correctos(ArrayList<Integer> argument, String mandato, String[] args) throws NumeroDeArgumentosIncorrecto {
+        for (int i = 0; i < COMANDOS.length - 1; i++) {
+            if (mandato.equals(COMANDOS[i])) {
+                if (args.length == ARGUMENTOS[i]) {
+                    //Si es comando text el ultimo parametro debe ser un string
+                    if (!mandato.equals("text")) {
+                        for (int j = 0; j < (args.length); j++) {
+                            argument.add(Integer.parseInt(args[j]));
+                        }
+                    } else {
+                        for (int j = 0; j < (args.length) - 1; j++) {
+                            argument.add(Integer.parseInt(args[j]));
+                        }
+                        this.text = args[2];
+                    }
+                    break;
+                } else throw new NumeroDeArgumentosIncorrecto();
+            }
+        }
+    }
+
+    private boolean es_Undo_Clear(String linea) {
+        if (linea.split(" ").length == 1) {
+            String mandato = linea.split(" ")[0];
+            if (mandato.equals("clear") || mandato.equals("undo")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void add_Historial(Figura fi) {
         this.historial.add(fi);
+    }
+
+    public void undo() {
+        try {
+            if (historial.size() > 0) {
+                historial.remove(historial.size() - 1);
+            } else throw new NoHayFigurasQueDeshacer();
+        } catch (NoHayFigurasQueDeshacer noHayFigurasQueDeshacer) {
+            System.out.println(noHayFigurasQueDeshacer);
+        }
     }
 
     public String getComando() {

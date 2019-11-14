@@ -9,15 +9,15 @@ public class Elipse extends Figura {
     private int rx;
     private int ry;
 
-    public Elipse(int x, int y, int rx, int ry) throws ArgumentosNoValidos {
+    public Elipse(int x, int y, int rx, int ry) throws ValorNoPermitido {
         super(x, y);
         try {
             if (rx > 0 && ry > 0) {
                 this.rx = rx;
                 this.ry = ry;
-            } else throw new ValorNoPermitido();
-        } catch (ValorNoPermitido valorNoPermitido) {
-            System.out.println(valorNoPermitido);
+            } else throw new ArgumentosNoValidos();
+        } catch (ArgumentosNoValidos argumentosNoValidos) {
+            System.out.println("Los argumentos no son validos");
         }
     }
 
