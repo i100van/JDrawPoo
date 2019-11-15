@@ -1,6 +1,5 @@
 import Comandos.GestorPrompt;
 import Comandos.Modificador;
-import Ficheros.Fichero;
 import Figuras.*;
 
 import java.io.IOException;
@@ -8,20 +7,19 @@ import java.util.ArrayList;
 
 public class InterfazUsuario {
     private GestorPrompt prompt;
-    private Fichero file;
+    private OperadorFicheros operadorFicheros;
     private Modificador modificador;
 
     public InterfazUsuario() throws IOException {
         this.prompt = new GestorPrompt();
-        this.file = new Fichero();
+        this.operadorFicheros = new OperadorFicheros();
         this.modificador=new Modificador();
-        file.vaciar_documento();
+        operadorFicheros.vaciar_documento();
         boolean fin = false;
         while (!fin) {
             try {
-                file.escribir_historial(prompt.getHistorial());
+                operadorFicheros.escribir_historial(prompt.getHistorial());
                 prompt.pedir_comando();
-                ArrayList<String> textos = prompt.getText();
                 ArrayList<Integer> argumentos = prompt.getArgumentos();
                 switch (prompt.getComando()) {
                     case "line":
@@ -37,7 +35,7 @@ public class InterfazUsuario {
                         this.prompt.add_Historial(modificador.actuar_en_Figura(circulo));
                         break;
                     case "text":
-                        Texto texto = new Texto(argumentos.get(0), argumentos.get(1), textos.get(0));
+                        Texto texto = new Texto(argumentos.get(0), argumentos.get(1), prompt.getText().get(0));
                         this.prompt.add_Historial(modificador.actuar_en_Figura(texto));
                         break;
                     case "ellipse":
@@ -63,10 +61,11 @@ public class InterfazUsuario {
                         this.prompt.clear();
                         break;
                     case "undo":
+                        //TODO: Preguntar como vaciar el fichero antes de reescribir todo
                         this.prompt.undo();
                         break;
                     case "save":
-                        //TODO: Hacer save
+                        operadorFicheros.save(prompt.getText().get(0),prompt.getText().get(1),prompt.getHistorial());
                         break;
                     case "load":
                         //TODO: Hacer load
