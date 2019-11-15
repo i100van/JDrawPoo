@@ -11,6 +11,8 @@ import java.util.StringJoiner;
 public class Fichero {
     private File file;
     private RandomAccessFile rfile;
+    private final String cabecera ="<html>\n" + " <head>\n" + " <meta charset=\"UTF-8\"/>\n" + " <meta http-equiv=\"refresh\" content=\"2\"/>\n" + " </head>\n" + " <body>\n" + " <svg width=\"1024\" height=\"1024\">\n";
+    private final String cierre ="</svg></body></html>";
 
     public Fichero() throws IOException {
         this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
@@ -21,23 +23,20 @@ public class Fichero {
 
     public void escribir_historial (ArrayList<Figura> historial) throws IOException {
         StringJoiner sj = new StringJoiner(" ");
-        sj.add("<html>\n" +
-                " <head>\n" +
-                " <meta charset=\"UTF-8\"/>\n" +
-                " <meta http-equiv=\"refresh\" content=\"2\"/>\n" +
-                " </head>\n" +
-                " <body>\n" +
-                " <svg width=\"1024\" height=\"1024\">\n");
+        sj.add(cabecera);
         for (Figura elemento: historial) {
             sj.add(elemento.toString());
         }
-        sj.add("</svg></body></html>");
+        sj.add(cierre);
         rfile.seek(0);
         rfile.writeChars(sj.toString());
     }
     public void vaciar_documento() throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(this.file));
-        bw.write("");
-        bw.close();
+        //TODO: Esto funciona mal, porque se queda el texto previo
+        rfile.writeChars(cabecera+cierre);
+    }
+
+    public void save (String ruta, String nombreFichero) throws IOException {
+        //TODO: Hay que hacerlo
     }
 }

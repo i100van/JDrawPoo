@@ -11,18 +11,19 @@ import java.util.Scanner;
 
 public class GestorPrompt {
 
-    private final String[] COMANDOS = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "clear", "undo", "save", "load"};
-    private final int[] ARGUMENTOS = {4, 3, 4, 4, 1, 4, 3, 4, 0, 0, 2, 2};
+    private final String[] COMANDOS = {"line", "circle", "pencolor", "fillcolor", "width", "rect", "text", "ellipse", "save", "load"};
+    private final int[] ARGUMENTOS = {4, 3, 4, 4, 1, 4, 3, 4, 2, 2};
 
     private String comando;
     private ArrayList argumentos;
-    private String text;
+    private ArrayList<String> text;
     private ArrayList<Figura> historial;
 
     public GestorPrompt() {
         this.comando = null;
         this.argumentos = null;
         this.historial = new ArrayList<>();
+        this.text = new ArrayList<>(2);
     }
 
     public void pedir_comando() {
@@ -52,8 +53,8 @@ public class GestorPrompt {
             //Mostrar la ayuda en caso de 3 errores
             erroresCometidos++;
             if (erroresCometidos % 3 == 0) {
-                //Help ayuda = new Help();
-                //ayuda.showhelp();
+                Help ayuda = new Help();
+                ayuda.showhelp();
             }
         }
         this.comando = mandato;
@@ -65,15 +66,20 @@ public class GestorPrompt {
             if (mandato.equals(COMANDOS[i])) {
                 if (args.length == ARGUMENTOS[i]) {
                     //Si es comando text el ultimo parametro debe ser un string
-                    if (!mandato.equals("text")) {
-                        for (String arg : args) {
-                            argument.add(Integer.parseInt(arg));
-                        }
-                    } else {
+                    if (mandato.equals("text")) {
                         for (int j = 0; j < (args.length) - 1; j++) {
                             argument.add(Integer.parseInt(args[j]));
                         }
-                        this.text = args[2];
+                        text.clear();
+                        text.add(0,args[2]);
+                    } else if (mandato.equals("save") || mandato.equals("load")) {
+                        text.clear();
+                        text.add(0,args[0]);
+                        text.add(1,args[1]);
+                    } else {
+                        for (String arg : args) {
+                            argument.add(Integer.parseInt(arg));
+                        }
                     }
                     break;
                 } else throw new NumeroDeArgumentosIncorrecto();
@@ -115,7 +121,7 @@ public class GestorPrompt {
         return argumentos;
     }
 
-    public String getText() {
+    public ArrayList<String> getText() {
         return text;
     }
 }
