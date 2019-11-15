@@ -1,0 +1,7 @@
+line 2,2,400,400
+circle 300,300,50
+pencolor 1,0,255,0
+fillcolor 1,0,0,255
+ellipse 600,600,20,60
+pencolor 10,255,0,0
+fillcolor 1,0,255,0

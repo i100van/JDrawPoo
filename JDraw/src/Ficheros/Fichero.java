@@ -16,6 +16,8 @@ public class Fichero {
 
     public Fichero() throws IOException {
         this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
+        //this.file = File.createTempFile("jdraw_tmp_file", "html");
+        //String fileName = file.getAbsolutePath();
         this.rfile = new RandomAccessFile(file, "rw");
         Desktop desktop = Desktop.getDesktop();
         desktop.browse(URI.create(String.valueOf(file.toURI())));
@@ -33,7 +35,9 @@ public class Fichero {
     }
     public void vaciar_documento() throws IOException {
         //TODO: Esto funciona mal, porque se queda el texto previo
-        rfile.writeChars(cabecera+cierre);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write("");
+        bw.close();
     }
 
     public void save (String ruta, String nombreFichero) throws IOException {

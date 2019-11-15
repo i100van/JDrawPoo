@@ -15,15 +15,17 @@ public class GestorPrompt {
     private final int[] ARGUMENTOS = {4, 3, 4, 4, 1, 4, 3, 4, 2, 2};
 
     private String comando;
-    private ArrayList argumentos;
+    private ArrayList<Integer> argumentos;
     private ArrayList<String> text;
     private ArrayList<Figura> historial;
+    private float op;
 
     public GestorPrompt() {
         this.comando = null;
         this.argumentos = null;
         this.historial = new ArrayList<>();
         this.text = new ArrayList<>(2);
+        this.op = 1;
     }
 
     public void pedir_comando() {
@@ -71,11 +73,16 @@ public class GestorPrompt {
                             argument.add(Integer.parseInt(args[j]));
                         }
                         text.clear();
-                        text.add(0,args[2]);
+                        text.add(0, args[2]);
                     } else if (mandato.equals("save") || mandato.equals("load")) {
                         text.clear();
-                        text.add(0,args[0]);
-                        text.add(1,args[1]);
+                        text.add(0, args[0]);
+                        text.add(1, args[1]);
+                    } else if (mandato.equals("pencolor") || mandato.equals("fillcolor")) {
+                        for (int j = 1; j < (args.length) ; j++) {
+                            argument.add(Integer.parseInt(args[j]));
+                        }
+                        op = Float.parseFloat(args[0]);
                     } else {
                         for (String arg : args) {
                             argument.add(Integer.parseInt(arg));
@@ -99,10 +106,24 @@ public class GestorPrompt {
         this.historial.add(fi);
     }
 
+    public float getOpacidad() {
+        return op;
+    }
+
     public void undo() {
         try {
             if (historial.size() > 0) {
                 historial.remove(historial.size() - 1);
+            } else throw new NoHayFigurasQueDeshacer();
+        } catch (NoHayFigurasQueDeshacer noHayFigurasQueDeshacer) {
+            System.err.println(noHayFigurasQueDeshacer);
+        }
+    }
+
+    public void clear() {
+        try {
+            if (historial.size() > 0) {
+                historial.clear();
             } else throw new NoHayFigurasQueDeshacer();
         } catch (NoHayFigurasQueDeshacer noHayFigurasQueDeshacer) {
             System.err.println(noHayFigurasQueDeshacer);

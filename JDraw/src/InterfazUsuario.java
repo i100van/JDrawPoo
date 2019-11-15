@@ -45,26 +45,28 @@ public class InterfazUsuario {
                         this.prompt.add_Historial(modificador.actuar_en_Figura(elipse));
                         break;
                     case "pencolor":
-                        int[] par_borde = {argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3)};
-                        modificador.setParBorde(par_borde);
+                        int[] par_borde = {argumentos.get(0), argumentos.get(1), argumentos.get(2)};
+                        float op_borde = prompt.getOpacidad();
+                        modificador.setParBorde(op_borde,par_borde);
                         break;
                     case "fillcolor":
-                        int[] par_color = {argumentos.get(0), argumentos.get(1), argumentos.get(2), argumentos.get(3)};
-                        modificador.setParColor(par_color);
+                        int[] par_color = {argumentos.get(0), argumentos.get(1), argumentos.get(2)};
+                        float op_color = prompt.getOpacidad();
+                        modificador.setParColor(op_color,par_color);
                         break;
                     case "width":
                         modificador.setAncho(argumentos.get(0));
                         break;
                     case "clear":
                         //TODO: Hay problemas de funcionamiento, preguntar como vaciar
-                        this.file.vaciar_documento();
+                        //this.file.vaciar_documento();
+                        this.prompt.clear();
                         break;
                     case "undo":
                         this.prompt.undo();
                         break;
                     case "save":
                         //TODO: Hacer save
-                        System.out.println("Estoy en save con parametros:"+comando+textos);
                         break;
                     case "load":
                         //TODO: Hacer load
