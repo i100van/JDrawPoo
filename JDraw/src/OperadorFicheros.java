@@ -33,15 +33,13 @@ public class OperadorFicheros {
         for (Figura elemento: historial) {
             sj.add(elemento.toString());
         }
-        sj.add(cierre);
+        sj.add("\n"+cierre);
         return sj;
     }
 
     public void vaciar_documento() throws IOException {
         //TODO: Esto funciona mal, porque se queda el texto previo
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-        bw.write("");
-        bw.close();
+        this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
     }
 
     public void save (String ruta, String nombreFichero, ArrayList<Figura> historial) throws IOException {
@@ -54,5 +52,9 @@ public class OperadorFicheros {
             bw.write(sj.toString());
             bw.close();
         }
+    }
+    public void load (String ruta, String nombreFichero){
+//TODO: despues de hacer un load, se tiene que poder seguir escribiendo el documento? si es asi, dos opciones:
+        // localizar la tag </svg> y escribir justo encima o introducir al historial todas las figuras que tenga el file
     }
 }

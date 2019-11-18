@@ -57,7 +57,7 @@ public class InterfazUsuario {
                         break;
                     case "clear":
                         //TODO: Hay problemas de funcionamiento, preguntar como vaciar
-                        //this.file.vaciar_documento();
+                        this.operadorFicheros.vaciar_documento();
                         this.prompt.clear();
                         break;
                     case "undo":
