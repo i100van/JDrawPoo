@@ -14,20 +14,18 @@ public class OperadorFicheros {
 
     public OperadorFicheros() throws IOException {
         this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
-        //this.file = File.createTempFile("jdraw_tmp_file", "html");
-        //String fileName = file.getAbsolutePath();
         this.rfile = new RandomAccessFile(file, "rw");
         Desktop desktop = Desktop.getDesktop();
         desktop.browse(URI.create(String.valueOf(file.toURI())));
     }
 
     public void escribir_historial (ArrayList<Figura> historial) throws IOException {
-        StringJoiner sj = getStringJoiner_historial(historial);
+        StringJoiner sj = getStringJoiner_html(historial);
         rfile.seek(0);
         rfile.writeChars(sj.toString());
     }
 
-    private StringJoiner getStringJoiner_historial(ArrayList<Figura> historial) {
+    private StringJoiner getStringJoiner_html(ArrayList<Figura> historial) {
         StringJoiner sj = new StringJoiner(" ");
         sj.add(cabecera);
         for (Figura elemento: historial) {
@@ -38,12 +36,20 @@ public class OperadorFicheros {
     }
 
     public void vaciar_documento() throws IOException {
-        //TODO: Esto funciona mal, porque se queda el texto previo
-        this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
+        rfile.seek(0);
+        long longitud = file.length();
+        System.out.println("longitud = " + longitud);
+        for (int i = 0; i < longitud; i++) {
+            rfile.writeChars("");
+        }
+    }
+    public void eliminar_documento() throws IOException {
+        file.delete();
+        rfile.close();
     }
 
     public void save (String ruta, String nombreFichero, ArrayList<Figura> historial) throws IOException {
-        StringJoiner sj = getStringJoiner_historial(historial);
+        StringJoiner sj = getStringJoiner_html(historial);
         String ruta_nombre = ruta+"/"+nombreFichero;
         File archivo = new File(ruta_nombre);
         BufferedWriter bw;

@@ -72,6 +72,7 @@ public class InterfazUsuario {
                         System.out.println("Estoy en load");
                         break;
                     case "exit":
+                        operadorFicheros.eliminar_documento();
                         fin = true;
                 }
             } catch (Exception e) {
