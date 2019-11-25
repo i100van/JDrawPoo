@@ -20,36 +20,38 @@ public class OperadorFicheros {
     }
 
     public void escribir_historial (ArrayList<Figura> historial) throws IOException {
-        StringJoiner sj = getStringJoiner_html(historial);
         rfile.seek(0);
+        StringJoiner sj = getStringJoiner_html_figuras(historial);
         rfile.writeChars(sj.toString());
+        rfile.setLength(rfile.getFilePointer());
     }
 
-    private StringJoiner getStringJoiner_html(ArrayList<Figura> historial) {
+    private StringJoiner getStringJoiner_html_figuras(ArrayList<Figura> historial) {
         StringJoiner sj = new StringJoiner(" ");
         sj.add(cabecera);
         for (Figura elemento: historial) {
-            sj.add(elemento.toString());
+            sj.add(elemento.toString()+"\n");
         }
         sj.add("\n"+cierre);
         return sj;
     }
 
-    public void vaciar_documento() throws IOException {
+    /*public void vaciar_documento() throws IOException {
         rfile.seek(0);
         long longitud = file.length();
         System.out.println("longitud = " + longitud);
         for (int i = 0; i < longitud; i++) {
             rfile.writeChars("");
         }
-    }
+    }*/
+
     public void eliminar_documento() throws IOException {
         file.delete();
         rfile.close();
     }
 
     public void save (String ruta, String nombreFichero, ArrayList<Figura> historial) throws IOException {
-        StringJoiner sj = getStringJoiner_html(historial);
+        StringJoiner sj = getStringJoiner_html_figuras(historial);
         String ruta_nombre = ruta+"/"+nombreFichero;
         File archivo = new File(ruta_nombre);
         BufferedWriter bw;
@@ -60,7 +62,7 @@ public class OperadorFicheros {
         }
     }
     public void load (String ruta, String nombreFichero){
-//TODO: despues de hacer un load, se tiene que poder seguir escribiendo el documento? si es asi, dos opciones:
+        //TODO: despues de hacer un load, se tiene que poder seguir escribiendo el documento? si es asi, dos opciones:
         // localizar la tag </svg> y escribir justo encima o introducir al historial todas las figuras que tenga el file
     }
 }

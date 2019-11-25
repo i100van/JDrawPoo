@@ -14,7 +14,6 @@ public class InterfazUsuario {
         this.prompt = new GestorPrompt();
         this.operadorFicheros = new OperadorFicheros();
         this.modificador=new Modificador();
-        operadorFicheros.vaciar_documento();
         boolean fin = false;
         while (!fin) {
             try {
@@ -57,11 +56,9 @@ public class InterfazUsuario {
                         break;
                     case "clear":
                         //TODO: Hay problemas de funcionamiento, preguntar como vaciar
-                        this.operadorFicheros.vaciar_documento();
                         this.prompt.clear();
                         break;
                     case "undo":
-                        //TODO: Preguntar como vaciar el fichero antes de reescribir todo
                         this.prompt.undo();
                         break;
                     case "save":
