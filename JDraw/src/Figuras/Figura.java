@@ -2,9 +2,10 @@ package Figuras;
 
 import Excepciones.ValorNoPermitido;
 
+import java.io.Serializable;
 import java.util.StringJoiner;
 
-public abstract class Figura {
+public abstract class Figura implements Serializable {
     protected int x;
     protected int y;
     protected int[] color;

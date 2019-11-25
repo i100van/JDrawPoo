@@ -1,12 +1,12 @@
 package Comandos;
 
 public class Help {
-    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001b[34m";
     public static final String ANSI_RESET = "\u001B[0m";
     public Help() {
     }
     public void showhelp() {
-        System.out.println(ANSI_RED+"Los comandos admitidos son los siguientes");
+        System.out.println(ANSI_BLUE+"Los comandos admitidos son los siguientes");
         System.out.println("line x0,y0,x1,y1");
         System.out.println("fillcolor o,r,g,b");
         System.out.println("pencolor o,r,g,b");

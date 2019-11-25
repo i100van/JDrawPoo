@@ -1,5 +1,6 @@
 package Comandos;
 
+import Excepciones.ComandoNoEncontrado;
 import Excepciones.ComandoNoValidoPorForma;
 import Excepciones.NoHayFigurasQueDeshacer;
 import Excepciones.NumeroDeArgumentosIncorrecto;
@@ -63,11 +64,12 @@ public class GestorPrompt {
         this.argumentos = argument;
     }
 
-    private void argumentos_correctos(ArrayList<Integer> argument, String mandato, String[] args) throws NumeroDeArgumentosIncorrecto {
-        for (int i = 0; i < COMANDOS.length - 1; i++) {
+    private void argumentos_correctos(ArrayList<Integer> argument, String mandato, String[] args) throws NumeroDeArgumentosIncorrecto, ComandoNoEncontrado {
+        boolean noEncontrado=true;
+        for (int i = 0; i < COMANDOS.length; i++) {
             if (mandato.equals(COMANDOS[i])) {
                 if (args.length == ARGUMENTOS[i]) {
-                    //Si es comando text el ultimo parametro debe ser un string
+                    noEncontrado=false;
                     if (mandato.equals("text")) {
                         for (int j = 0; j < (args.length) - 1; j++) {
                             argument.add(Integer.parseInt(args[j]));
@@ -79,7 +81,7 @@ public class GestorPrompt {
                         text.add(0, args[0]);
                         text.add(1, args[1]);
                     } else if (mandato.equals("pencolor") || mandato.equals("fillcolor")) {
-                        for (int j = 1; j < (args.length) ; j++) {
+                        for (int j = 1; j < (args.length); j++) {
                             argument.add(Integer.parseInt(args[j]));
                         }
                         op = Float.parseFloat(args[0]);
@@ -92,6 +94,9 @@ public class GestorPrompt {
                 } else throw new NumeroDeArgumentosIncorrecto();
             }
         }
+        if (noEncontrado){
+            throw new ComandoNoEncontrado();
+        }
     }
 
     private boolean es_Undo_Clear(String linea) {
@@ -100,14 +105,6 @@ public class GestorPrompt {
             return mandato.equals("clear") || mandato.equals("undo");
         }
         return false;
-    }
-
-    public void add_Historial(Figura fi) {
-        this.historial.add(fi);
-    }
-
-    public float getOpacidad() {
-        return op;
     }
 
     public void undo() {
@@ -120,7 +117,7 @@ public class GestorPrompt {
         }
     }
 
-    public void clear() {
+    public void clearHistory() {
         try {
             if (historial.size() > 0) {
                 historial.clear();
@@ -128,6 +125,14 @@ public class GestorPrompt {
         } catch (NoHayFigurasQueDeshacer noHayFigurasQueDeshacer) {
             System.err.println(noHayFigurasQueDeshacer);
         }
+    }
+
+    public void add_Historial(Figura fi) {
+        this.historial.add(fi);
+    }
+
+    public float getOpacidad() {
+        return op;
     }
 
     public String getComando() {
@@ -144,5 +149,18 @@ public class GestorPrompt {
 
     public ArrayList<String> getText() {
         return text;
+    }
+
+    public void setHistorial(ArrayList<Figura> historial) { this.historial = historial; }
+
+    @Override
+    public String toString() {
+        return "GestorPrompt{" +
+                ", comando='" + comando + '\'' +
+                ", argumentos=" + argumentos +
+                ", text=" + text +
+                ", historial=" + historial +
+                ", op=" + op +
+                '}';
     }
 }
