@@ -1,3 +1,5 @@
+package Gestores;
+
 import Excepciones.ArchivoYaExiste;
 import Figuras.Figura;
 
@@ -7,15 +9,16 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
-public class OperadorFicheros {
+public class GestorFicheros {
     private File file;
     private RandomAccessFile rfile;
-    private String cabecera = "<html>\n" + " <head>\n" + " <meta charset=\"UTF-8\"/>\n" + " <meta http-equiv=\"refresh\" content=\"2\"/>\n" + " </head>\n" + " <body>\n" + " <svg width=\"1024\" height=\"1024\">\n";
+    private String cabecera;
     private final String cierre = "</svg></body></html>";
 
-    public OperadorFicheros() throws IOException {
-        this.file = new File("C:/Users/i100v/IntelliJIDEAProjects/JDrawPoo/JDraw/src/pruebas.html");
+    public GestorFicheros() throws IOException {
+        this.file = new File("JDraw/src/sesion.html");
         this.rfile = new RandomAccessFile(file, "rw");
+        this.cabecera = "<html>\n" + " <head>\n" + " <meta charset=\"UTF-8\"/>\n" + " <meta http-equiv=\"refresh\" content=\"2\"/>\n" + " </head>\n" + " <body>\n" + " <svg width=\"1024\" height=\"1024\">\n";
         cargar_Archivo();
         return;
     }
@@ -38,7 +41,7 @@ public class OperadorFicheros {
         for (Figura elemento : historial) {
             sj.add(elemento.toString() + "\n");
         }
-        sj.add("\n" + cierre);
+        sj.add(cierre);
         return sj;
     }
 
@@ -52,9 +55,8 @@ public class OperadorFicheros {
         StringJoiner sj = getStringJoiner_html_figuras(historial);
         String ruta_nombre = ruta + "/" + nombreFichero + ".html";
         File archivo = new File(ruta_nombre);
-        BufferedWriter bw;
         if (!archivo.exists()) {
-            bw = new BufferedWriter(new FileWriter(archivo));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
             bw.write(sj.toString());
             bw.close();
         } else {
@@ -64,14 +66,14 @@ public class OperadorFicheros {
 
     public void load(String ruta, String nombreFichero) throws IOException, ClassNotFoundException {
         String ruta_nombre = ruta + "/" + nombreFichero;
-        file = new File(ruta_nombre);
-        rfile = new RandomAccessFile(file, "rw");
-        String linea = rfile.readLine();
-        cabecera = "";
+        BufferedReader br = new BufferedReader(new FileReader(ruta_nombre));
+        StringBuilder nueva_cabecera = new StringBuilder();
+        String linea = br.readLine();
         while (!linea.equals("</svg></body></html>")) {
-            cabecera = cabecera + linea;
-            linea = rfile.readLine();
+            nueva_cabecera.append(linea);
+            linea = br.readLine();
         }
+        cabecera = nueva_cabecera.toString();
         cargar_Archivo();
     }
 }

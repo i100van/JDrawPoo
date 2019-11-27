@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JDrawPoo:jar">
+    <output-path>$USER_HOME$/Documents/PathOutputJdraw/artifacts/JDrawPoo_jar</output-path>
+    <root id="archive" name="JDrawPoo.jar">
+      <element id="module-output" name="JDrawPoo" />
+    </root>
+  </artifact>
+</component>

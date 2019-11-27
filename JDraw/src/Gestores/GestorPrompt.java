@@ -1,4 +1,4 @@
-package Comandos;
+package Gestores;
 
 import Excepciones.ComandoNoEncontrado;
 import Excepciones.ComandoNoValidoPorForma;
@@ -52,11 +52,10 @@ public class GestorPrompt {
             } catch (Exception e) {
                 System.err.println(e.getMessage());
                 Error = true;
+                erroresCometidos++;
             }
-            //Mostrar la ayuda en caso de 3 errores
-            erroresCometidos++;
             if (erroresCometidos % 3 == 0) {
-                Help ayuda = new Help();
+                GestorAyuda ayuda = new GestorAyuda();
                 ayuda.showhelp();
             }
         }
@@ -65,11 +64,11 @@ public class GestorPrompt {
     }
 
     private void argumentos_correctos(ArrayList<Integer> argument, String mandato, String[] args) throws NumeroDeArgumentosIncorrecto, ComandoNoEncontrado {
-        boolean noEncontrado=true;
+        boolean noEncontrado = true;
         for (int i = 0; i < COMANDOS.length; i++) {
             if (mandato.equals(COMANDOS[i])) {
                 if (args.length == ARGUMENTOS[i]) {
-                    noEncontrado=false;
+                    noEncontrado = false;
                     if (mandato.equals("text")) {
                         for (int j = 0; j < (args.length) - 1; j++) {
                             argument.add(Integer.parseInt(args[j]));
@@ -94,7 +93,7 @@ public class GestorPrompt {
                 } else throw new NumeroDeArgumentosIncorrecto();
             }
         }
-        if (noEncontrado){
+        if (noEncontrado) {
             throw new ComandoNoEncontrado();
         }
     }
@@ -151,7 +150,9 @@ public class GestorPrompt {
         return text;
     }
 
-    public void setHistorial(ArrayList<Figura> historial) { this.historial = historial; }
+    public void setHistorial(ArrayList<Figura> historial) {
+        this.historial = historial;
+    }
 
     @Override
     public String toString() {

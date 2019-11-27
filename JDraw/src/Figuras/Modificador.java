@@ -1,4 +1,4 @@
-package Comandos;
+package Figuras;
 
 import Excepciones.ArgumentosNoValidos;
 import Figuras.Figura;

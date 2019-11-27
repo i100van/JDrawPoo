@@ -1,9 +1,9 @@
-package Comandos;
+package Gestores;
 
-public class Help {
+public class GestorAyuda {
     public static final String ANSI_BLUE = "\u001b[34m";
     public static final String ANSI_RESET = "\u001B[0m";
-    public Help() {
+    public GestorAyuda() {
     }
     public void showhelp() {
         System.out.println(ANSI_BLUE+"Los comandos admitidos son los siguientes");
